@@ -1,0 +1,24 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # Change this if using a different branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Deploy to EC2
+      env:
+        EC2_SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_KEY }}
+        EC2_HOST: ${{ secrets.AWS_IP }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        ssh -o StrictHostKeyChecking=no ubuntu@$AWS_IP "cd /var/www/myapp && git pull origin main && sudo systemctl restart nginx"
