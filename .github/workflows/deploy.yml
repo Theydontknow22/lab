@@ -19,6 +19,6 @@ jobs:
         EC2_HOST: ${{ secrets.AWS_IP }}
       run: |
         mkdir -p ~/.ssh
-        echo "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+        echo "$AWS_SSH_KEY" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
         ssh -o StrictHostKeyChecking=no ubuntu@$AWS_IP "cd /var/www/myapp && git pull origin main && sudo systemctl restart nginx"
