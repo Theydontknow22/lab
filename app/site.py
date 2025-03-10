@@ -10,7 +10,7 @@ app = Flask(__name__, template_folder='/var/www/myapp/html')
 
 # Get PostgreSQL credentials from the .env file
 db_host = os.getenv('DB_HOST')
-db_name = os.getenv('DB_NAME')
+db_name = os.getenv('DB_DB')
 db_user = os.getenv('DB_USER')
 db_password = os.getenv('DB_PASSWORD')
 
