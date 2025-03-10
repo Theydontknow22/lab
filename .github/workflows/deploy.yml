@@ -19,11 +19,7 @@ jobs:
         EC2_HOST: ${{ secrets.AWS_IP }}
         ACTION_USER: ${{ secrets.ACTION_USER }}
       run: |
-        mkdir -p ~/.ssh
-        echo "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-    
-        ssh -v -o StrictHostKeyChecking=no $ACTION_USER@$EC2_HOST
-          cd /var/www/myapp
-          git pull origin main
-          sudo systemctl restart nginx
+        ssh -o StrictHostKeyChecking=no $ACTION_USER@$EC2_HOST "if [ -d /var/www/myapp ]; then cd /var/www/myapp && git pull origin main && sudo systemctl restart nginx; else echo '/var/www/myapp does not exist'; fi"
+
+          
+      
