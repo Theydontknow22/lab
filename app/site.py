@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import psycopg2
 from dotenv import load_dotenv
 import os
@@ -6,7 +6,7 @@ import os
 # Load environment variables from .env
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='/var/www/myapp')
 
 # Get PostgreSQL credentials from the .env file
 db_host = os.getenv('DB_HOST')
@@ -25,13 +25,7 @@ def connect_to_db():
 
 @app.route('/')
 def home():
-    return "Hello, Flask with PostgreSQL!"
-
-@app.route('/B22')
-def personal():
-    
-    
-    
+    return render_template('index.html')
 
 @app.route('/data')
 def get_data():
@@ -44,4 +38,4 @@ def get_data():
     return jsonify(rows)
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
