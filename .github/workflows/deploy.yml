@@ -24,6 +24,6 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
     
         ssh -v -o StrictHostKeyChecking=no $ACTION_USER@$EC2_HOST
-          cd /var/www/myapp/
+          cd /var/www/myapp
           git pull origin main
           sudo systemctl restart nginx
