@@ -17,7 +17,7 @@ jobs:
       env:
         EC2_SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_KEY }}
         EC2_HOST: ${{ secrets.AWS_IP }}
-        ACTION_USER: ${{ secrets.ACTION.ACTION_USER }}
+        ACTION_USER: ${{ secrets.ACTION_USER }}
       run: |
         mkdir -p ~/.ssh
         echo "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
