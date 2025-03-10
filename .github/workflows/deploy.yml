@@ -23,7 +23,7 @@ jobs:
         echo "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
     
-        ssh -o StrictHostKeyChecking=no $ACTION_USER@$EC2_HOST
+        ssh -v $ACTION_USER@$EC2_HOST
           git config --global --add safe.directory /var/www/myapp
           cd /var/www/myapp
           git pull origin main
