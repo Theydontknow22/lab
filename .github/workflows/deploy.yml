@@ -17,8 +17,14 @@ jobs:
       env:
         EC2_SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_KEY }}
         EC2_HOST: ${{ secrets.AWS_IP }}
+        ACTION_USER: ${{secrets.ACTION_USER}}
       run: |
         mkdir -p ~/.ssh
-        echo "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-        ssh -o StrictHostKeyChecking=no ubuntu@$EC2_HOST "cd /var/www/myapp && git pull origin main && sudo systemctl restart nginx"
+            echo "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
+              git config --global --add safe.directory /var/www/myapp
+              cd /var/www/myapp
+              git pull origin main
+              sudo systemctl restart nginx
+            EOF
