@@ -9,10 +9,10 @@ load_dotenv()
 app = Flask(__name__, template_folder='/var/www/myapp/html')
 
 # Get PostgreSQL credentials from the .env file
-db_host = os.getenv('DB_HOST')
-db_name = os.getenv('DB_DB')
-db_user = os.getenv('DB_USER')
-db_password = os.getenv('DB_PASSWORD')
+db_host = os.getenv('POSTGRES_HOST')
+db_name = os.getenv('POSTGRES_DB')
+db_user = os.getenv('POSTGRES_USER')
+db_password = os.getenv('POSTGRES_PASSWORD')
 
 # Connect to PostgreSQL
 def connect_to_db():
