@@ -6,7 +6,7 @@ import os
 # Load environment variables from .env
 load_dotenv()
 
-app = Flask(__name__, template_folder='/var/www/myapp')
+app = Flask(__name__, template_folder='/var/www/myapp/html')
 
 # Get PostgreSQL credentials from the .env file
 db_host = os.getenv('DB_HOST')
@@ -26,6 +26,10 @@ def connect_to_db():
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/B22')
+def personal():
+    return render_template('practice.html')
 
 @app.route('/data')
 def get_data():
