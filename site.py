@@ -42,9 +42,9 @@ def get_data():
     cursor = conn.cursor()
     
     sort_ip = f"echo {sudo} | sudo -S awk {{'print $1'}} /var/log/nginx/access.log | sort -u"
-    output = [subprocess.run(sort_ip, shell=True, capture_output=True, text=True)]
+    output = subprocess.run(sort_ip, shell=True, capture_output=True, text=True)
     
-    for ip in output:
+    for ip in output.stdout:
         print(ip)
         if bool(ipaddress.ip_address(ip)) == True:  
           cursor.execute(f"INSERT INTO webserver.ip (ip) VALUES ('{ip}');")
