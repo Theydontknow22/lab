@@ -41,7 +41,7 @@ def get_data():
     conn = connect_to_db()
     cursor = conn.cursor()
     
-    sort_ip = f"echo {sudo}| sudo -S awk {'print $1'} /var/log/nginx/access.log | sort -u"
+    sort_ip = f"echo {sudo} | sudo -S awk {'print $1'} /var/log/nginx/access.log | sort -u"
     output = [subprocess.run(sort_ip, shell=True, capture_output=True, text=True)]
     
     for ip in output:
