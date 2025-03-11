@@ -46,7 +46,7 @@ def get_data():
     
     for ip in output:
         print(ip)
-        if bool(ipaddress.IPv4Address(ip)) == True:  
+        if bool(ipaddress.ip_address(ip)) == True:  
           cursor.execute(f"INSERT INTO webserver.ip (ip) VALUES ('{ip}');")
         else:
             print(f"This IP {ip} is not IPv4.")
