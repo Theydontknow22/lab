@@ -40,11 +40,11 @@ def get_data():
     conn = connect_to_db()
     cursor = conn.cursor()
     
-    sort_ip = "sudo awk {'print $1'} /var/log/nginx/access.log | sort -u"
+    sort_ip = "awk {'print $1'} /var/log/nginx/access.log | sort -u"
     output = [subprocess.run(sort_ip, shell=True, capture_output=True, text=True)]
     
     for ip in output:
-        if ip == ipaddress.IPv4Address:  
+        if bool(ipaddress.IPv4Address(ip)) == True:  
           cursor.execute(f"INSERT INTO webserver.ip (ip) VALUES ('{ip}');")
         else:
             print(f"This IP {ip} is not IPv4.")
