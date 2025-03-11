@@ -40,7 +40,7 @@ def get_data():
     conn = connect_to_db()
     cursor = conn.cursor()
     
-    sort_ip = "awk {'print $1'} /var/log/nginx/access.log | sort -u"
+    sort_ip = "sudo awk {'print $1'} /var/log/nginx/access.log | sort -u"
     output = [subprocess.run(sort_ip, shell=True, capture_output=True, text=True)]
     
     for ip in output:
