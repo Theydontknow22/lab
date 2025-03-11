@@ -15,6 +15,7 @@ db_host = os.getenv('POSTGRES_HOST')
 db_name = os.getenv('POSTGRES_DB')
 db_user = os.getenv('POSTGRES_USER')
 db_password = os.getenv('POSTGRES_PASSWORD')
+sudo = os.getenv('SUDO')
 
 # Connect to PostgreSQL
 def connect_to_db():
@@ -40,7 +41,7 @@ def get_data():
     conn = connect_to_db()
     cursor = conn.cursor()
     
-    sort_ip = "sudo awk {'print $1'} /var/log/nginx/access.log | sort -u"
+    sort_ip = f"echo {sudo}| sudo -S awk {'print $1'} /var/log/nginx/access.log | sort -u"
     output = [subprocess.run(sort_ip, shell=True, capture_output=True, text=True)]
     
     for ip in output:
