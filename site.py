@@ -45,6 +45,7 @@ def get_data():
     output = [subprocess.run(sort_ip, shell=True, capture_output=True, text=True)]
     
     for ip in output:
+        print(ip)
         if bool(ipaddress.IPv4Address(ip)) == True:  
           cursor.execute(f"INSERT INTO webserver.ip (ip) VALUES ('{ip}');")
         else:
