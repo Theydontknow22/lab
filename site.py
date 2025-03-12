@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import subprocess
 import ipaddress
+import re
 
 # Load environment variables from .env
 load_dotenv()
@@ -42,14 +43,16 @@ def get_data():
     cursor = conn.cursor()
     
     sort_ip = f"echo {sudo} | sudo -S awk {{'print $1'}} /var/log/nginx/access.log | sort -u"
-    output = subprocess.run(sort_ip, shell=True, capture_output=True, text=True)
+    output = [subprocess.run(sort_ip, shell=True, capture_output=True, text=True)]
     
-    for ip in output.stdout:
-        print(ip)
-        if bool(ipaddress.ip_address(ip)) == True:  
-          cursor.execute(f"INSERT INTO webserver.ip (ip) VALUES ('{ip}');")
-        else:
-            print(f"This IP {ip} is not IPv4.")
+    ip_list = re.split("\n", output.stdout)
+    ip_list.remove("")
+    for ip in ip_list:
+      if ipaddress.IPv4Address(ip):
+        cursor.execute(f"INSERT INTO webserver.ip (ip) VALUES ('{ip}');")
+      else:
+        print(f"This {ip} is not a valid IP address.")
+           
     
     cursor.execute(f"SELECT * FROM webserver.ip LIMIT 100;")
     rows = cursor.fetchall()
