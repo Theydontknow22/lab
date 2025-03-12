@@ -43,7 +43,7 @@ def get_data():
     cursor = conn.cursor()
     
     sort_ip = f"echo {sudo} | sudo -S awk {{'print $1'}} /var/log/nginx/access.log | sort -u"
-    output = [subprocess.run(sort_ip, shell=True, capture_output=True, text=True)]
+    output = subprocess.run(sort_ip, shell=True, capture_output=True, text=True)
     
     ip_list = re.split("\n", output.stdout)
     ip_list.remove("")
