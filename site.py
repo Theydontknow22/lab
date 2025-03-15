@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, session
 from flask_login import LoginManager
 import psycopg2
 from dotenv import load_dotenv
